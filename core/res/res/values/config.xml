@@ -150,7 +150,7 @@
     <integer name="config_activityDefaultDur">100</integer>
 
     <!-- Fade out time for screen rotation -->
-    <integer name="config_screen_rotation_fade_out">116</integer>
+    <integer name="config_screen_rotation_fade_out">0</integer>
 
     <!-- Fade in time for screen rotation -->
     <integer name="config_screen_rotation_fade_in">233</integer>
