@@ -17,6 +17,7 @@
 package com.android.keyguard;
 
 import android.content.Context;
+import android.os.UserHandle;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.ViewGroup;
@@ -133,8 +134,9 @@ public class KeyguardPINView extends KeyguardPinBasedInputView {
             });
         }
 
-        mScramblePin = LineageSettings.System.getInt(getContext().getContentResolver(),
-                LineageSettings.System.LOCKSCREEN_PIN_SCRAMBLE_LAYOUT, 0) == 1;
+        mScramblePin = LineageSettings.System.getIntForUser(getContext().getContentResolver(),
+                LineageSettings.System.LOCKSCREEN_PIN_SCRAMBLE_LAYOUT, 0,
+                UserHandle.USER_CURRENT) == 1;
         if (mScramblePin) {
             Collections.shuffle(sNumbers);
             // get all children who are NumPadKey's
