@@ -43,6 +43,15 @@ public final class AttestationHooks {
     private static final String PRODUCT_GMS_SPOOFING_FINGERPRINT =
             SystemProperties.get("ro.build.gms_fingerprint");
 
+    private static final String PRODUCT_GMS_SPOOFING_PRODUCT =
+            SystemProperties.get("ro.build.gms_product");
+
+    private static final String PRODUCT_GMS_SPOOFING_DEVICE =
+            SystemProperties.get("ro.build.gms_device");
+
+    private static final String PRODUCT_GMS_SPOOFING_MODEL =
+            SystemProperties.get("ro.build.gms_model");
+
     private static final Map<String, String> sP1Props = new HashMap<>();
     static {
         sP1Props.put("BRAND", "google");
@@ -97,8 +106,10 @@ public final class AttestationHooks {
             setBuildField("FINGERPRINT", PRODUCT_GMS_SPOOFING_FINGERPRINT);
         }
 
-        // Alter model name to avoid hardware attestation enforcement
-        setBuildField("MODEL", Build.MODEL + " ");
+        // Spoof more device props for SafetyNet CTS profile
+        setBuildField("PRODUCT", "PRODUCT_GMS_SPOOFING_PRODUCT");
+        setBuildField("DEVICE", "PRODUCT_GMS_SPOOFING_DEVICE");
+        setBuildField("MODEL", "PRODUCT_GMS_SPOOFING_MODEL");
     }
 
     public static void initApplicationBeforeOnCreate(Context context) {
@@ -130,7 +141,7 @@ public final class AttestationHooks {
     }
 
     private static boolean isCallerSafetyNet() {
-        return Arrays.stream(Thread.currentThread().getStackTrace())
+        return sIsGms && Arrays.stream(Thread.currentThread().getStackTrace())
                 .anyMatch(elem -> elem.getClassName().contains("DroidGuard"));
     }
 
