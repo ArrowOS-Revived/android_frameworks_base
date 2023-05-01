@@ -434,7 +434,7 @@ public class KeyguardPasswordView extends KeyguardAbsKeyInputView
     private void runQuickUnlock(Boolean matched) {
         if (matched) {
             mCallback.reportUnlockAttempt(userId, true, 0);
-            mCallback.dismiss(true, userId, SecurityMode.Password);
+            mCallback.dismiss(true, userId);
             resetPasswordText(true, true);
         }
     }
